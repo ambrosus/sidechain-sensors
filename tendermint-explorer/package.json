@@ -1,0 +1,29 @@
+{
+  "name": "tendermint-explorer",
+  "version": "0.1.0",
+  "private": true,
+  "dependencies": {
+    "auth0-js": "^9.3.2",
+    "axios": "^0.18.0",
+    "bootstrap": "^4.0.0",
+    "jquery": "^1.9.1",
+    "jwt-decode": "^2.2.0",
+    "lodash": "^4.17.5",
+    "popper.js": "^1.12.9",
+    "react": "^16.2.0",
+    "react-bootstrap-table": "^4.3.1",
+    "react-csv": "^1.0.14",
+    "react-dom": "^16.2.0",
+    "react-router": "^4.2.0",
+    "react-router-dom": "^4.2.2",
+    "react-scripts": "1.1.1",
+    "react-table": "^6.8.0",
+    "reactstrap": "^5.0.0-beta.2"
+  },
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test --env=jsdom",
+    "eject": "react-scripts eject"
+  }
+}
