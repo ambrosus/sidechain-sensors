@@ -1,7 +1,6 @@
 import React, { Component } from 'react'
 import { bool } from 'prop-types'
-import { Jumbotron, Row, Col, Badge } from 'reactstrap'
-import _ from 'lodash'
+import { Row, Col } from 'reactstrap'
 
 import '../app.css'
 import Indicator from './Indicator'
