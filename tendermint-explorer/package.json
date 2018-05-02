@@ -1,5 +1,5 @@
 {
-  "name": "tendermint-explorer",
+  "name": "ambrosus-prototype-application",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
@@ -9,6 +9,7 @@
     "jquery": "^1.9.1",
     "jwt-decode": "^2.2.0",
     "lodash": "^4.17.5",
+    "npm": "^5.8.0",
     "popper.js": "^1.12.9",
     "react": "^16.2.0",
     "react-bootstrap-table": "^4.3.1",

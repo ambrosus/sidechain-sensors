@@ -19,6 +19,7 @@ class Viewer extends Component {
     axios.defaults.headers.common['Authorization'] = "Bearer " + localStorage.getItem('access_token');
     axios.get(config.API_BACKEND + "/seed")
       .then(function (res) {
+        console.log(res);
         let data = JSON.parse(res.data)
         this.setState({seed:  data.value.slice(4, data.value.length)})
       }.bind(this))

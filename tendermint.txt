@@ -1,0 +1,3 @@
+tendermint unsafe_reset_all
+tendermint node
+abci-cli kvstore

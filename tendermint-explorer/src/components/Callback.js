@@ -1,20 +1,20 @@
-import { Component } from 'react';
-import { setIdToken, setAccessToken } from '../services/AuthService';
+import React, { Component } from 'react'
+
+import { setIdToken, setAccessToken } from '../services/AuthService'
+
+// Component
 
 class Callback extends Component {
-
-  constructor() {
-    super()
-  }
 
   componentDidMount() {
     setAccessToken();
     setIdToken();
+
     window.location.href = "/";
   }
 
   render() {
-    return null;
+    return <div className="callback"></div>
   }
 }
 

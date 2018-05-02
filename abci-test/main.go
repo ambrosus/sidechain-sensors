@@ -4,14 +4,13 @@ import (
 	"flag"
 	"os"
 
+	mapp "github.com/dmytronasyrov/abci-test/app"
 	"github.com/tendermint/abci/server"
 	"github.com/tendermint/tmlibs/common"
 	"github.com/tendermint/tmlibs/log"
-	mapp "github.com/troush/abci-test/app"
 )
 
 func main() {
-
 	addrPtr := flag.String("addr", "tcp://0.0.0.0:46658", "Listen address")
 	abciPtr := flag.String("abci", "socket", "socket | grpc")
 	flag.Parse()
