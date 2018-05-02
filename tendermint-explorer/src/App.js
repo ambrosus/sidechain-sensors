@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Button, Container, Input, Row, Label, FormGroup } from 'reactstrap'
+import { Jumbotron, Button, Container, Input, Row, Label, FormGroup } from 'reactstrap'
 import axios from 'axios'
 import _ from 'lodash'
 
@@ -94,31 +94,33 @@ class App extends Component {
 
     return (
       <div className="app">
-        <Container className="pt-3">
-          <StatusBar online={ online || false } chainInited={ chain_initilized || false }/>
+        <Jumbotron>
+          <Container className="pt-3">
+            <StatusBar online={ online || false } chainInitialized={ chain_initilized || false }/>
 
-          <FormGroup>
-            <Row className="col-md-12">
-              <Row className="col-md-12 pt-3">
-                <Input id="seed" placeholder="Seed" value={this.state.seed} className={this.state.seedError ? "is-invalid" : ""} name="seed" onChange={this.handleInputChange}/>
+            <FormGroup>
+              <Row className="col-md-12">
+                <Row className="col-md-12 pt-3">
+                  <Input id="seed" placeholder="Seed" value={this.state.seed} className={this.state.seedError ? "is-invalid" : ""} name="seed" onChange={this.handleInputChange}/>
+                </Row>
+
+                <Row className="col-md-12 mt-3">
+                  <Label>Set of rules: </Label>
+                </Row>
+
+                <Row className="col-md-12 pt-4">
+                  <Input id="seed" name="rules" value={this.state.rules} className={this.state.rulesError ? "is-invalid" : ""} onChange={this.handleInputChange} placeholder="Rules seed"/>
+                </Row>
+
+                <Rules rules={this.state.rules} />
+
+                <Row className="col-md-12 pt-4">
+                  <Button className="btn-success col-md-12" onClick={this.startTrip}>Initialize chain & start trip</Button>
+                </Row>
               </Row>
-
-              <Row className="col-md-12 mt-3">
-                <Label>Set of rules: </Label>
-              </Row>
-
-              <Row className="col-md-12 pt-4">
-                <Input id="seed" name="rules" value={this.state.rules} className={this.state.rulesError ? "is-invalid" : ""} onChange={this.handleInputChange} placeholder="Rules seed"/>
-              </Row>
-
-              <Rules rules={this.state.rules} />
-
-              <Row className="col-md-12 pt-4">
-                <Button className="btn-success col-md-12" onClick={this.startTrip}>Initialize chain & start trip</Button>
-              </Row>
-            </Row>
-          </FormGroup>
-        </Container>
+            </FormGroup>
+          </Container>
+        </Jumbotron> 
       </div>
     );
   }
