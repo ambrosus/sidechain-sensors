@@ -1,5 +1,27 @@
+:root {
+  --color-clouds: ##ecf0f1;
+  --color-asbestos: #7f8c8d;
+}
+
 * {
-  --color-asbestos: #7f8c8d
+  margin: 0;
+  padding: 0;
+}
+
+*, *::before, *::after {
+  box-sizing: inherit;
+}
+
+html {
+  box-sizing: border-box;
+  font-size: 62.5%;
+}
+
+body {
+  font-family: 'Open Sans', sans-serif;
+  font-weight: 400;
+  line-height: 1.6;
+  min-height: 100vh;
 }
 
 .app {
@@ -34,6 +56,8 @@
 .status-bar__indicator {
   display: flex;
   justify-content: space-around;
+  margin: 0;
+  padding: 0;
 }
 
 .indicator {
@@ -42,19 +66,14 @@
   margin: 8px 0;
 
   display: flex;
-  flex: 0 0 100%;
-  justify-content: left;
-}
-
-@media only screen and (max-width: 395px) {
-  .indicator {
-    justify-content: space-between;
-  }
+  flex: 0 0 60%;
+  justify-content: center;
 }
 
 .indicator__label {
   color: var(--color-asbestos);
   font-weight: inherit;
+  font-size: inherit;
 }
 
 .indicator > span:not(:last-child) {
@@ -62,7 +81,18 @@
 }
 
 .badge {
+  font-size: inherit;
   font-weight: inherit;
-  border-radius: 8px;
   padding: 4px 16px;
+  width: 100%;
+}
+
+@media only screen and (max-width: 395px) {
+  .indicator {
+    flex-direction: column;
+  }
+
+  .indicator > span:not(:last-child) {
+    padding: 0;
+  }
 }
