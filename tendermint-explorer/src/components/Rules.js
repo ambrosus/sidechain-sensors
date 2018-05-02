@@ -13,7 +13,7 @@ class Rules extends Component {
     }
 
     buildFromRules (rules) {
-        if (rules === "") return
+        if (rules === undefined || rules === "") return
         if (!this.isEven(rules.length)) return
         if (rules.length < 4) return
 

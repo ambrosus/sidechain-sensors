@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 
-import { login, logout, isLoggedIn } from '../services/AuthService';
+import { login, logout, isLoggedIn } from '../services/TendermintService';
 
 export default () => (
     <div className="not-authorized">

@@ -11,8 +11,7 @@ import {
 
 import registerServiceWorker from './registerServiceWorker';
 import 'bootstrap/dist/css/bootstrap.css';
-import './index.css';
-import { userHasScopes, logout, isLoggedIn } from './services/AuthService';
+import { userHasScopes, logout, isLoggedIn } from './services/TendermintService';
 
 import App from './App';
 import Callback from './components/Callback'

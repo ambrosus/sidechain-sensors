@@ -1,6 +1,10 @@
 import decode from 'jwt-decode'
 import { createBrowserHistory } from 'history'
 import auth0 from 'auth0-js'
+import axios from 'axios'
+import _ from 'lodash'
+
+import config from '../config'
 
 // Constants
 
@@ -18,6 +22,32 @@ const auth = new auth0.WebAuth({
 })
 
 // Public 
+
+export function initChain(seed, rules) {
+  // axios.post(config.API_BACKEND + "/initilize-chain", data)
+  // .then(res => {
+  //   if (JSON.parse(res.data).result.hash) {
+  //     window.location.href = "/chain-started"
+  //   }
+  // })
+}
+
+export function silentAuth() {
+  // axios.defaults.headers.common['Authorization'] = "Bearer " + localStorage.getItem('access_token')
+  // axios.get(config.API_BACKEND + "/health")
+  //     .then(function (res) {
+  //       let data = JSON.parse(res.data)
+
+  //       this.setState({tendermint: {
+  //         online: data.result ? true : false,
+  //         data: data.result ? JSON.parse(data.result.response.data) : null
+  //       }})
+
+  //       if (JSON.parse(data.result.response.data).chain_initilized) {
+  //         window.location.href = "/chain-started";
+  //       }
+  //     }.bind(this))
+}
 
 export function login(role) {
   const scope = (role == "driver" ? 'create:transactions' : 'view:transactions')

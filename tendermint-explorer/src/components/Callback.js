@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 
-import { setIdToken, setAccessToken } from '../services/AuthService'
+import { setIdToken, setAccessToken } from '../services/TendermintService'
 
 // Component
 
