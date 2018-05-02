@@ -1,48 +1,40 @@
-import React, { Component } from 'react'
-import { Jumbotron, Container, Row, Col } from 'reactstrap'
+import React, { Component, Fragment } from 'react'
 
-import { initChain } from './services/TendermintService'
-
-import StatusBar from './components/StatusBar'
-import DriverForm from './components/DriverForm'
-
-// Component
+import { userHasScopes, logout, isLoggedIn } from './services/TendermintService';
 
 class App extends Component {
 
-  state = {
-    tendermint: {
-      data: {}
-    },
-    chain_started: false
-  }
+    logout = () => {
+        
+    }
 
-  // Render
+    render () {
+        const childrenWithProps = React.Children.map(
+            this.props.children,
+            child => React.cloneElement(child, this.props)
+        )
 
-  render() {
-    const { data, online } = this.state.tendermint
-    const { chain_initilized } = data
+        return (
+            <Fragment>
+                { childrenWithProps }
 
-    return (
-      <div className="app">
-        <Jumbotron>
-          <Container>
-            <Row>
-              <Col className="col-xs-12 col-md-10 col-lg-8 col-xl-8 offset-md-1 offset-lg-2 offset-xl-3">
-                <StatusBar online={online || false} chainInitialized={chain_initilized || false} />
-              </Col>
-            </Row>
-
-            <Row>
-              <Col className="col-xs-12 col-md-10 col-lg-8 col-xl-6 offset-md-1 offset-lg-2 offset-xl-3">
-                <DriverForm onStartTrip={initChain} />
-              </Col>
-            </Row>
-          </Container>
-        </Jumbotron>
-      </div>
-    );
-  }
+                <footer className="page-footer footer font-small blue pt-4 mt-4">
+                    <div className="container-fluid text-center text-md-left">
+                        <div className="row">
+                            <div className="col-md-6">
+                                <h1>{userHasScopes(["create:transactions"])}</h1>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div className="footer-copyright py-3 text-center">
+                        Ambrosus Tendermint Explorer
+                        <p> {(!isLoggedIn()) ? (<p></p>) : (<button className="btn log" onClick={ logout }>Log out</button>)} </p>
+                    </div>
+                </footer>
+            </Fragment>
+        )
+    }
 }
 
-export default App
+export default App;

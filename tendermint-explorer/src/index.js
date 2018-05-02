@@ -11,11 +11,12 @@ import {
 
 import registerServiceWorker from './registerServiceWorker';
 import 'bootstrap/dist/css/bootstrap.css';
-import { userHasScopes, logout, isLoggedIn } from './services/TendermintService';
+import { userHasScopes, isLoggedIn } from './services/TendermintService';
 
 import App from './App';
+import Driver from './Driver';
 import Callback from './components/Callback'
-import NotAuthorized from './components/NotAuthorized'
+import Welcome from './components/Welcome'
 import NoMatch from './components/NoMatch'
 import ChainStatus from './components/ChainStatus'
 import Viewer from './components/Viewer'
@@ -24,38 +25,23 @@ import Viewer from './components/Viewer'
 
 const Root = () => (
     <div className="root">
-        <main role="main" className="container mt-5">
+        <App>
             <Router>
                 <Switch>
                     { (isLoggedIn()) ? (
                         (userHasScopes(["create:transactions"]) ? (
-                            <Route path="/" exact component={ App } />
+                            <Route path="/" exact component={ Driver } />
                         ) : (<Route path="/" exact component={ Viewer } />))
-                        ) : (<Route path="/" exact component={ NotAuthorized } />)
+                        ) : (<Route path="/" exact component={ Welcome } />)
                     }
                     <Route path="/callback" component={ Callback } />
                     <Route path="/chain-started" component={ ChainStatus } />
                     <Route component={ NoMatch } />
                 </Switch>
             </Router>
-        </main>
-
-        <footer className="page-footer footer font-small blue pt-4 mt-4">
-            <div className="container-fluid text-center text-md-left">
-                <div className="row">
-                    <div className="col-md-6">
-                        <h1>{userHasScopes(["create:transactions"])}</h1>
-                    </div>
-                </div>
-            </div>
-            
-            <div className="footer-copyright py-3 text-center">
-                Ambrosus Tendermint Explorer
-                <p> {(!isLoggedIn()) ? (<p></p>) : (<button className="btn log" onClick={() => logout()}>Log out</button>)} </p>
-            </div>
-        </footer>
+        </App>
     </div>
 )
 
-ReactDOM.render(< Root />, document.getElementById('root'));
+ReactDOM.render(<Root/>, document.getElementById('root'));
 registerServiceWorker();
