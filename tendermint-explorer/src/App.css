@@ -34,6 +34,12 @@ body {
   margin: 0 auto;
 }
 
+.driver {
+  max-width: 80rem;
+  display: block;
+  margin: 0 auto;
+}
+
 .app-logo {
   animation: app-logo-spin infinite 20s linear;
   height: 80px;
@@ -65,6 +71,10 @@ body {
   background-color: var(--color-clouds);
 }
 
+.btn {
+  font-size: 1.3rem;
+}
+
 .heading-primary {
   text-transform: uppercase;
   text-align: center;
@@ -90,16 +100,21 @@ body {
   text-align: center;
 }
 
+.status-bar__title {
+  text-align: left;
+  padding: 0;
+}
+
 .status-bar__indicator {
   display: flex;
-  justify-content: space-around;
+  justify-content: left;
   margin: 0;
   padding: 0;
 }
 
 .indicator {
   font-weight: 400;
-  font-size: 1em;
+  font-size: 1.3rem;
   margin: 8px 0;
 
   display: flex;
@@ -111,6 +126,11 @@ body {
   color: var(--color-asbestos);
   font-weight: inherit;
   font-size: inherit;
+  margin: 0.5rem auto;
+
+  display: flex;
+  justify-content: space-between;
+  flex: 1 0 30%;
 }
 
 .indicator > span:not(:last-child) {
@@ -120,8 +140,12 @@ body {
 .badge {
   font-size: inherit;
   font-weight: inherit;
-  padding: 4px 16px;
-  width: 100%;
+  margin: 0 auto;
+
+  display: flex;
+  flex: 1 0 30%;
+  align-content: center;
+  align-items: center;
 }
 
 .footer {
@@ -148,7 +172,7 @@ body {
   font-weight: 500;
 }
 
-@media only screen and (max-width: 770px) {
+@media only screen and (max-width: 769px) {
   .heading-primary--main {
     font-size: 5rem;
     letter-spacing: 2.5rem;
@@ -157,6 +181,10 @@ body {
   .heading-primary--sub {
     font-size: 1.5rem;
     letter-spacing: 1rem;
+  }
+
+  .status-bar__title {
+    text-align: center;
   }
 }
 
@@ -170,6 +198,10 @@ body {
     font-size: 1rem;
     font-weight: 600;
     letter-spacing: .5rem;
+  }
+
+  .status-bar__indicator {
+    justify-content: space-around;
   }
 }
 

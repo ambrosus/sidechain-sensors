@@ -28,13 +28,13 @@ class Driver extends Component {
         <Jumbotron>
           <Container>
             <Row>
-              <Col className="col-xs-12 col-md-10 col-lg-8 col-xl-8 offset-md-1 offset-lg-2 offset-xl-3">
+              <Col xs="12" md={{ size: 10, offset: 1 }} lg={{ size: 8, offset: 2 }}>
                 <StatusBar online={online || false} chainInitialized={chain_initilized || false} />
               </Col>
             </Row>
 
             <Row>
-              <Col className="col-xs-12 col-md-10 col-lg-8 col-xl-6 offset-md-1 offset-lg-2 offset-xl-3">
+              <Col xs="12" md={{ size: 10, offset: 1 }} lg={{ size: 8, offset: 2 }}>
                 <DriverForm onStartTrip={initChain} />
               </Col>
             </Row>
