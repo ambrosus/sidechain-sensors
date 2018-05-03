@@ -1,12 +1,9 @@
 import React, { Component, Fragment } from 'react'
 import ReactTable from 'react-table'
-import axios from 'axios'
 import { Alert, Jumbotron, Col, Form, Button, Container, Input, Row, Label, FormGroup } from 'reactstrap'
 import { CSVLink } from 'react-csv'
-import _ from 'lodash'
 
 import 'react-table/react-table.css'
-import config from './config'
 
 import Loader from './components/Loader'
 

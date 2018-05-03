@@ -8,7 +8,7 @@ import {
 
 import registerServiceWorker from './registerServiceWorker';
 import 'bootstrap/dist/css/bootstrap.css';
-import { userHasScopes, isLoggedIn } from './services/TendermintService';
+import { userHasScopes, isLoggedIn } from './services/AuthService';
 
 import App from './App';
 import Driver from './Driver';
