@@ -10,18 +10,21 @@ export default () => (
         <Jumbotron>
             <Container>
                 <Row>
-                    <Col className="col-xs-12 col-md-10 col-lg-8 col-xl-8 offset-md-1 offset-lg-2 offset-xl-3">
-                        <h3>Welcome. Please sign in.</h3>
+                    <Col xs="12">
+                        <h1 className="heading-primary">
+                            <span className="heading-primary--main">Ambrosus</span>
+                            <span className="heading-primary--sub">please sign in</span>
+                        </h1>
                     </Col>
                 </Row>
 
                 <Row>
-                    <Col className="col-xs-12 col-md-10 col-lg-8 col-xl-8 offset-md-1 offset-lg-2 offset-xl-3">
-                        <Button onClick={() => login("driver") }>I'm a Driver</Button>
+                    <Col xs={{ size: 10, order: 1, offset: 1 }} sm={{ size: 8, offset: 2 }} md={{ size: 6, offset: 3 }} lg={{ size: 4, offset: 4 }}>
+                        <Button color="success" block onClick={() => login("driver") }>I'm a Driver</Button>
                     </Col>
 
-                    <Col className="col-xs-12 col-md-10 col-lg-8 col-xl-8 offset-md-1 offset-lg-2 offset-xl-3">
-                        <Button onClick={() => login("buyer") }>I'm a Buyer</Button>
+                    <Col xs={{ size: 10, order: 2, offset: 1 }} sm={{ size: 8, offset: 2 }} md={{ size: 6, offset: 3 }} lg={{ size: 4, offset: 4 }} className="py-4">
+                        <Button color="success" block onClick={() => login("buyer") }>I'm a Buyer</Button>
                     </Col>
                 </Row>
             </Container>

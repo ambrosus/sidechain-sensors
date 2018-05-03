@@ -54,6 +54,27 @@ body {
   background-color: var(--color-clouds);
 }
 
+.heading-primary {
+  text-transform: uppercase;
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.heading-primary--main {
+  display: block;
+  font-size: 6rem;
+  font-weight: 400;
+  letter-spacing: 3.5rem;
+}
+
+.heading-primary--sub {
+  display: block;
+  font-size: 2rem;
+  font-weight: 700;
+  letter-spacing: 1rem;
+  margin-top: 2rem;
+}
+
 .status-bar {
   text-align: center;
 }
@@ -90,6 +111,31 @@ body {
   font-weight: inherit;
   padding: 4px 16px;
   width: 100%;
+}
+
+@media only screen and (max-width: 770px) {
+  .heading-primary--main {
+    font-size: 5rem;
+    letter-spacing: 2.5rem;
+  }
+
+  .heading-primary--sub {
+    font-size: 1.5rem;
+    letter-spacing: 1rem;
+  }
+}
+
+@media only screen and (max-width: 568px) {
+  .heading-primary--main {
+    font-size: 3rem;
+    letter-spacing: 1.5rem;
+  }
+
+  .heading-primary--sub {
+    font-size: 1rem;
+    font-weight: 600;
+    letter-spacing: .5rem;
+  }
 }
 
 @media only screen and (max-width: 395px) {
