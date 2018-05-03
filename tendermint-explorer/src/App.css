@@ -2,6 +2,7 @@
   --color-clouds: #ecf0f1;
   --color-silver: #bdc3c7;
   --color-asbestos: #7f8c8d;
+  --color-wet-asphalt: #34495e;
 }
 
 * {
@@ -16,6 +17,7 @@
 html {
   box-sizing: border-box;
   font-size: 62.5%;
+  background-color: var(--color-wet-asphalt);
 }
 
 body {
@@ -23,6 +25,13 @@ body {
   font-weight: 400;
   line-height: 1.6;
   min-height: 100vh;
+  background-color: var(--color-wet-asphalt);
+}
+
+.welcome {
+  max-width: 80rem;
+  display: block;
+  margin: 0 auto;
 }
 
 .app-logo {
@@ -51,6 +60,8 @@ body {
 }
 
 .jumbotron {
+  padding: 3rem;
+  margin: 0;
   background-color: var(--color-clouds);
 }
 
@@ -111,6 +122,30 @@ body {
   font-weight: inherit;
   padding: 4px 16px;
   width: 100%;
+}
+
+.footer {
+  background-color: var(--color-wet-asphalt);
+}
+
+.footer p {
+  padding: 0;
+  margin: 0;
+}
+
+.footer span {
+  color: #fff;
+  display: block;
+}
+
+.footer--main {
+  font-size: 1.3rem;
+  font-weight: 600;
+}
+
+.footer--sub {
+  font-size: 1.1rem;
+  font-weight: 500;
 }
 
 @media only screen and (max-width: 770px) {
