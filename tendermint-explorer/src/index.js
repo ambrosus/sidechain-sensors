@@ -1,12 +1,9 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { Main } from 'reactstrap';
 import {
     BrowserRouter as Router,
     Route,
-    Link,
-    Switch,
-    Redirect
+    Switch
 } from "react-router-dom";
 
 import registerServiceWorker from './registerServiceWorker';

@@ -1,7 +1,7 @@
 import React from 'react';
 import { Jumbotron, Container, Row, Col, Button } from 'reactstrap'
 
-import { login, logout, isLoggedIn } from '../services/TendermintService';
+import { login } from '../services/TendermintService';
 
 // Component
 

@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React from 'react'
 import { bool } from 'prop-types'
 import { Row, Col } from 'reactstrap'
 

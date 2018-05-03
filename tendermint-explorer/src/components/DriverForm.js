@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
-import { string, func } from 'prop-types'
-import { Row, Col, Form, FormGroup, Input, Label, Button } from 'reactstrap'
+import { func } from 'prop-types'
+import { Form, FormGroup, Input, Label, Button } from 'reactstrap'
 
 import Rules from './Rules'
 
@@ -24,7 +24,7 @@ class DriverForm extends Component {
         
         const length = value.length
         
-        if (length == 0) return undefined
+        if (length === 0) return undefined
         if (length > 0 && length < 16) return false
         else return true
     }
@@ -34,7 +34,7 @@ class DriverForm extends Component {
         
         const length = value.length
         
-        if (length == 0) return undefined
+        if (length === 0) return undefined
         if (length > 0 && length < 16) return false
         else return true
     }
@@ -74,7 +74,7 @@ class DriverForm extends Component {
                             name="seed"
                             placeholder="asfJh9w2efJoijdf0asd9IJoifasd09fjwasdfaidf0wfahwdfh9"
                             value={ this.state.seed }
-                            invalid={ this.state.isValidSeed == undefined ? false : !this.state.isValidSeed }
+                            invalid={ this.state.isValidSeed === undefined ? false : !this.state.isValidSeed }
                             valid={ this.state.isValidSeed }
                             onChange={ this.onSeedChange }
                         />
@@ -87,7 +87,7 @@ class DriverForm extends Component {
                             name="rules"
                             placeholder="10203040"
                             value={ this.state.rules }
-                            invalid={ this.state.isValidRules == undefined ? false : !this.state.isValidRules }
+                            invalid={ this.state.isValidRules === undefined ? false : !this.state.isValidRules }
                             valid={ this.state.isValidRules }
                             onChange={ this.onRulesChange }
                         />
