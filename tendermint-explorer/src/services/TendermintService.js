@@ -5,6 +5,22 @@ import config from '../config'
 
 // Public 
 
+export async function health() {
+  try {
+    axios.defaults.headers.common['Authorization'] = "Bearer " + localStorage.getItem('access_token')
+    const res = await axios.get(config.API_BACKEND + "/health")
+    const status = res.status
+    const response = JSON.parse(res.data).result.response.data
+
+    return { status, response }
+  } catch (err) {
+    const status = err.response.status
+    const response = err.response.statusText
+
+    return { status, response }
+  }
+}
+
 export async function initChain(seed, rules) {
   const params = { seed: seed, rules: rules }
   const res = await axios.post(config.API_BACKEND + "/initilize-chain", params)
@@ -42,7 +58,7 @@ export function getData(height) {
       this.state.blocks.push(res[0])
       this.setState({blocks: this.state.blocks})
     }
-  }.bind(this))
+  })
 }
 
 export function featchData() {
@@ -56,22 +72,5 @@ export function featchData() {
         this.getData(i)
       }
       this.setState({loaded: true})
-    }.bind(this))
-}
-
-export function silentAuth() {
-  // axios.defaults.headers.common['Authorization'] = "Bearer " + localStorage.getItem('access_token')
-  // axios.get(config.API_BACKEND + "/health")
-  //     .then(function (res) {
-  //       let data = JSON.parse(res.data)
-
-  //       this.setState({tendermint: {
-  //         online: data.result ? true : false,
-  //         data: data.result ? JSON.parse(data.result.response.data) : null
-  //       }})
-
-  //       if (JSON.parse(data.result.response.data).chain_initilized) {
-  //         window.location.href = "/chain-started";
-  //       }
-  //     }.bind(this))
+    })
 }

@@ -71,7 +71,7 @@ class DriverForm extends Component {
                         <Input
                             id="seed"
                             name="seed"
-                            placeholder="asfJh9w2efJoijdf0asd9IJoifasd09fjwasdfaidf0wfahwdfh9"
+                            placeholder="Ex.: asfJh9w2efJoijdf0asd9IJoifasd09fjwasdfaidf0wfahwdfh9"
                             value={ this.state.seed }
                             invalid={ this.state.isValidSeed === undefined ? false : !this.state.isValidSeed }
                             valid={ this.state.isValidSeed }
@@ -84,7 +84,7 @@ class DriverForm extends Component {
                         <Input
                             id="rules"
                             name="rules"
-                            placeholder="10203040"
+                            placeholder="Ex.: 10203040"
                             value={ this.state.rules }
                             invalid={ this.state.isValidRules === undefined ? false : !this.state.isValidRules }
                             valid={ this.state.isValidRules }

@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
-import { Jumbotron, Container, Row, Col } from 'reactstrap'
+import { Alert, Jumbotron, Container, Row, Col } from 'reactstrap'
 
-import { initChain } from './services/TendermintService'
+import { health as tenderHealth, initChain } from './services/TendermintService'
 
 import StatusBar from './components/StatusBar'
 import DriverForm from './components/DriverForm'
@@ -11,31 +11,92 @@ import DriverForm from './components/DriverForm'
 class Driver extends Component {
 
   state = {
-    tendermint: {
-      data: {}
-    },
-    chain_started: false
+    online: false,
+    tendermint: undefined,
+    chainInited: false,
+    error: undefined,
+    warning: undefined
+  }
+
+  // Life
+
+  componentWillMount () {
+    this.checkHealth()
+  }
+
+  // Private
+
+  async checkHealth () {
+    const { status, response } = await tenderHealth()
+
+    if (status === 200) {
+      this.setState({
+        online: true,
+        tendermint: response,
+        error: undefined,
+        warning: undefined
+      })
+    } else if (status === 503) {
+      this.setState({
+        online: false,
+        tendermint: undefined,
+        error: response,
+        warning: undefined
+      })
+    } else {
+      this.setState({
+        warning: response
+      })
+    }
+  }
+
+  startTrip = () => {
+    // if (JSON.parse(data.result.response.data).chain_initilized) {
+    //   window.location.href = "/chain-started";
+    // }
   }
 
   // Render
 
+  renderWarning = (warning) => {
+    return (
+      <Row>
+        <Col xs="12">
+          <Alert color="warning">{ warning }</Alert>
+        </Col>
+      </Row>
+    )
+  }
+
+  renderError = (err) => {
+    return (
+      <Row>
+        <Col xs="12">
+          <Alert color="danger">{ err }</Alert>
+        </Col>
+      </Row>
+    )
+  }
+
   render() {
-    const { data, online } = this.state.tendermint
-    const { chain_initilized } = data
+    const { online, chainInited } = this.state
 
     return (
       <div className="driver">
         <Jumbotron>
           <Container>
+            { this.state.warning && this.renderWarning(this.state.warning) }
+            { this.state.error && this.renderError(this.state.error) }
+
             <Row>
               <Col xs="12" md={{ size: 10, offset: 1 }} lg={{ size: 8, offset: 2 }}>
-                <StatusBar online={ online || false } chainInitialized={ chain_initilized || false } />
+                <StatusBar online={ online || false } chainInited={ chainInited || false } />
               </Col>
             </Row>
 
             <Row>
               <Col xs="12" md={{ size: 10, offset: 1 }} lg={{ size: 8, offset: 2 }}>
-                <DriverForm onStartTrip={initChain} />
+                <DriverForm onStartTrip={ this.startTrip } />
               </Col>
             </Row>
           </Container>

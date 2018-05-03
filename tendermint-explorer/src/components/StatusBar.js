@@ -21,7 +21,7 @@ export default (props) => (
                 </Col>
                     
                 <Col xs={{ size: 12, order: 2 }} md={{ size: 4 }} className="status-bar__indicator"> 
-                    <Indicator title="Chain:" isSuccess={ props.chainInitialized } textSuccess="Started" textFailure="Not started"/>
+                    <Indicator title="Chain:" isSuccess={ props.chainInited } textSuccess="Started" textFailure="Not started"/>
                 </Col>
             </Row>
         </Container>
