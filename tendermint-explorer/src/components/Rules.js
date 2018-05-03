@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Button, Container, InputGroup, Input, InputGroupAddon, Row, Label, FormGroup } from 'reactstrap';
 import _ from 'lodash';
 
-import '../app.css';
+import '../App.css';
 
 // Component
 

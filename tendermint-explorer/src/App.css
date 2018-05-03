@@ -234,7 +234,7 @@ a {
   margin: 2rem;
 }
 
-@media only screen and (max-width: 769px) {
+@media only screen and (max-width: 768px) {
   .heading-primary--main {
     font-size: 5rem;
     letter-spacing: 2.5rem;
@@ -243,10 +243,6 @@ a {
   .heading-primary--sub {
     font-size: 1.5rem;
     letter-spacing: 1rem;
-  }
-
-  .status-bar__title {
-    text-align: center;
   }
 }
 
@@ -260,6 +256,10 @@ a {
     font-size: 1rem;
     font-weight: 600;
     letter-spacing: .5rem;
+  }
+
+  .status-bar__title {
+    text-align: center;
   }
 
   .status-bar__indicator {

@@ -1,7 +1,7 @@
 import React from 'react'
 import { Container, Row, Col } from 'reactstrap'
 
-import '../app.css'
+import '../App.css'
 import Indicator from './Indicator'
 
 // Component
