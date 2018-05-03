@@ -1,7 +1,6 @@
 package main
 
 import (
-	"fmt"
 	"io/ioutil"
 	"net/http"
 
@@ -17,7 +16,7 @@ type params struct {
 func query(endpoint string, c echo.Context) error {
 	resp, err := http.Get("http://localhost:46657/" + endpoint)
 	if err != nil {
-		return c.JSON(http.StatusServiceUnavailable, "Tendermint offline")
+		return c.JSON(http.StatusServiceUnavailable, err)
 	}
 
 	defer resp.Body.Close()
@@ -63,24 +62,22 @@ func blocks(c echo.Context) error {
 	// return c.JSON(http.StatusOK, result)
 }
 
-func initilizeChain(c echo.Context) (err error) {
+func initChain(c echo.Context) (err error) {
 	p := new(params)
-
 	if err = c.Bind(p); err != nil {
 		return
 	}
 
 	resp, err := http.Get("http://localhost:46657/broadcast_tx_commit?tx=\"initilize_chain:" + p.Seed + ":" + p.Rules + "\"")
-	fmt.Println("http://localhost:46657/broadcast_tx_commit?tx=\"initilize_chain:" + p.Seed + ":" + p.Rules + "\"")
 	if err != nil {
-		return c.JSON(http.StatusServiceUnavailable, "Tendermint offline")
+		return c.JSON(http.StatusServiceUnavailable, err)
 	}
 
 	defer resp.Body.Close()
 
 	body, err := ioutil.ReadAll(resp.Body)
 	if err != nil {
-		return c.JSON(http.StatusServiceUnavailable, "Tendermint offline")
+		return c.JSON(http.StatusServiceUnavailable, err)
 	}
 
 	json := string(body)
@@ -104,11 +101,11 @@ func main() {
 
 	r := e.Group("/")
 	r.Use(middleware.JWTWithConfig(jwtConfig))
-	r.GET("checkHealth", checkHealth)
+	r.GET("check_health", checkHealth)
 	r.GET("chain_status", chainStatus)
 	r.GET("blocks", blocks)
 	r.GET("seed", seed)
-	r.POST("initilize-chain", initilizeChain)
+	r.POST("init_chain", initChain)
 	r.GET("", func(c echo.Context) error {
 		return c.JSON(http.StatusOK, "Hello, World!")
 	})

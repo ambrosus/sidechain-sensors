@@ -1,5 +1,7 @@
 import decode from 'jwt-decode'
 import auth0 from 'auth0-js'
+import axios from 'axios'
+
 import history from '../history'
 
 // Constants
@@ -31,27 +33,29 @@ export function userHasScopes(scopes) {
 }
 
 export function getIdToken() {
-    return localStorage.getItem(ID_TOKEN_KEY);
+    return localStorage.getItem(ID_TOKEN_KEY)
 }
 
 export function setIdToken() {
-    let idToken = getParameterByName('id_token');
-    localStorage.setItem(ID_TOKEN_KEY, idToken);
+    let idToken = getParameterByName('id_token')
+    localStorage.setItem(ID_TOKEN_KEY, idToken)
 }
 
 export function getAccessToken() {
-    return localStorage.getItem(ACCESS_TOKEN_KEY);
+    return localStorage.getItem(ACCESS_TOKEN_KEY)
 }
 
 export function setAccessToken() {
-    let accessToken = getParameterByName('access_token');
-    localStorage.setItem(ACCESS_TOKEN_KEY, accessToken);
+    let accessToken = getParameterByName('access_token')
+    localStorage.setItem(ACCESS_TOKEN_KEY, accessToken)
+    
+    axios.defaults.headers.common['Authorization'] = "Bearer " + accessToken
 }
 
 export function isLoggedIn() {
-    const idToken = getIdToken();
+    const idToken = getIdToken()
 
-    return !!idToken && !isTokenExpired(idToken);
+    return !!idToken && !isTokenExpired(idToken)
 }
 
 export function login(role) {
@@ -60,11 +64,13 @@ export function login(role) {
     const redirectUri = REDIRECT
     const audience = AUDIENCE
 
-    auth.authorize({ responseType, redirectUri, audience, scope });
+    auth.authorize({ responseType, redirectUri, audience, scope })
 }
 
 export function logout() {
-    localStorage.clear();
+    localStorage.clear()
+
+    delete axios.defaults.headers.common['Authorization']
 
     history.push('/')
 }
@@ -72,9 +78,9 @@ export function logout() {
 // Private
 
 function getParameterByName(name) {
-    let match = RegExp('[#&]' + name + '=([^&]*)').exec(window.location.hash);
+    let match = RegExp('[#&]' + name + '=([^&]*)').exec(window.location.hash)
 
-    return match && decodeURIComponent(match[1].replace(/\+/g, ' '));
+    return match && decodeURIComponent(match[1].replace(/\+/g, ' '))
 }
 
 function getTokenExpirationDate(encodedToken) {

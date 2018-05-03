@@ -13,8 +13,8 @@ class Driver extends Component {
 
   state = {
     online: false,
-    tendermint: undefined,
     chainInited: false,
+    tendermint: undefined,
     error: undefined,
     warning: undefined
   }
@@ -27,10 +27,23 @@ class Driver extends Component {
 
   // Private 
 
-  async checkHealth () {
+  checkHealth = async () => {
     const { status, response } = await checkHealth()
+    this.changeState(status, response)
+  }
 
-    if (status === 200) {
+  startTrip = async (seed, rules) => {
+    const { status, response } = await initChain(seed, rules)
+    this.changeState(status, response)
+    console.log("RESPONSE", response);
+    
+    if (response && response["hash"]) {
+      this.setState({ chainInited: true })
+    }
+  }
+
+  changeState = (status, response) => {
+    if (status === 200 && response) {
       this.setState({
         online: true,
         tendermint: response,
@@ -54,19 +67,25 @@ class Driver extends Component {
         warning: undefined
       })
     } else {
-      this.setState({
-        warning: response
-      })
+      if (response) {
+        this.setState({ warning: response })
+      } else {
+        this.setState({ warning: "Tendermint have responed with an empty message" })
+      }
     }
   }
 
-  startTrip = () => {
-    // if (JSON.parse(data.result.response.data).chain_initilized) {
-    //   window.location.href = "/chain-started";
-    // }
-  }
-
   // Render
+
+  renderSuccess = (msg) => {
+    return (
+      <Row>
+        <Col xs="12">
+          <Alert color="success">{ msg }</Alert>
+        </Col>
+      </Row>
+    )
+  }
 
   renderWarning = (warning) => {
     return (
@@ -88,6 +107,14 @@ class Driver extends Component {
     )
   }
 
+  renderDriverForm = () => (
+    <Row>
+      <Col xs="12" md={{ size: 10, offset: 1 }} lg={{ size: 8, offset: 2 }}>
+        <DriverForm onStartTrip={this.startTrip}/>
+      </Col>
+    </Row>
+  )
+
   render() {
     const { online, chainInited } = this.state
 
@@ -95,6 +122,7 @@ class Driver extends Component {
       <div className="driver">
         <Jumbotron>
           <Container>
+            { this.state.chainInited && this.renderSuccess("Chain has been initiated. All details now available to the buyer.") }
             { this.state.warning && this.renderWarning(this.state.warning) }
             { this.state.error && this.renderError(this.state.error) }
 
@@ -104,11 +132,7 @@ class Driver extends Component {
               </Col>
             </Row>
 
-            <Row>
-              <Col xs="12" md={{ size: 10, offset: 1 }} lg={{ size: 8, offset: 2 }}>
-                <DriverForm onStartTrip={ this.startTrip } />
-              </Col>
-            </Row>
+            { !this.state.chainInited && this.renderDriverForm() }
           </Container>
         </Jumbotron>
       </div>

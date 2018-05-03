@@ -2,13 +2,15 @@ import axios from 'axios'
 import _ from 'lodash'
 
 import config from '../config'
+import { getAccessToken } from './AuthService'
 
 // Public 
 
 export async function checkHealth() {
   try {
-    axios.defaults.headers.common['Authorization'] = "Bearer " + localStorage.getItem('access_token')
-    const res = await axios.get(config.API_BACKEND + "/checkHealth")
+    axios.defaults.headers.common['Authorization'] = "Bearer " + getAccessToken()
+
+    const res = await axios.get(config.API_BACKEND + "/check_health")
     const status = res.status
     const response = JSON.parse(res.data).result.response.data
 
@@ -22,16 +24,24 @@ export async function checkHealth() {
 }
 
 export async function initChain(seed, rules) {
-  const params = { seed: seed, rules: rules }
-  const res = await axios.post(config.API_BACKEND + "/initilize-chain", params)
+  try {
+    axios.defaults.headers.common['Authorization'] = "Bearer " + getAccessToken()
 
-  if (JSON.parse(res.data).result.hash) {
-    window.location.href = "/chain-started"
+    const params = { seed: seed, rules: rules }
+    const res = await axios.post(config.API_BACKEND + "/init_chain", params)
+    const status = res.status
+    const response = JSON.parse(res.data).result
+    
+    return { status, response }
+  } catch (err) {
+    const status = err.response.status
+    const response = err.response.statusText
+
+    return { status, response }
   }
 }
 
 export function loadChain() {
-  axios.defaults.headers.common['Authorization'] = "Bearer " + localStorage.getItem('access_token');
     axios.get(config.API_BACKEND + "/seed")
       .then(function (res) {
         console.log(res);

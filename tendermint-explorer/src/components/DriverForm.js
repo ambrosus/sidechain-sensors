@@ -48,8 +48,7 @@ class DriverForm extends Component {
     onRulesChange = (e) => {
         const rules = e.target.value
         const isValidRules = this.validateRules(rules)
-        console.log(rules);
-        
+
         this.setState({ rules, isValidRules })
     }
 
