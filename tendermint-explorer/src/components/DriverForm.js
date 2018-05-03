@@ -34,7 +34,7 @@ class DriverForm extends Component {
         const length = value.length
         
         if (length === 0) return undefined
-        if (length > 0 && length < 16) return false
+        if (length > 0 && length < 8) return false
         else return true
     }
 
@@ -48,7 +48,8 @@ class DriverForm extends Component {
     onRulesChange = (e) => {
         const rules = e.target.value
         const isValidRules = this.validateRules(rules)
-
+        console.log(rules);
+        
         this.setState({ rules, isValidRules })
     }
 

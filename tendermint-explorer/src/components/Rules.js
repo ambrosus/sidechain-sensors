@@ -9,59 +9,39 @@ import '../App.css';
 class Rules extends Component {
 
     buildFromRules (rules) {
-        if (rules === undefined || rules === "") return
-        if (rules.length % 2 == 0) return
-        if (rules.length < 4) return
+        if (rules === undefined || rules === "") return null
+        if (rules.length % 2 == 0) return null
+        if (rules.length < 4) return null
 
-        let chunks = _.chunk(rules, 2)
-        let settingsLength = parseInt(chunks[0].join(''))
-        let settings = _.chunk(chunks.slice(1, chunks.length), 3)
-        let reduceToComponents = _.bind((settings) => {
-            _.reduce(settings, ([result, acc, self], s) => {
-                let val = parseInt(s.join(''))
+        const chunks = _.chunk(rules, 2)
+        const settingsLength = parseInt(chunks[0].join(''))
+        const settings = _.chunk(chunks.slice(1, chunks.length), 3)
+        
+        const reduceToComponents = _.bind(settings => _.reduce(settings, ([result, acc, self], s) => {
+            const val = parseInt(s.join(''));
+            if (acc == 1) return [result.concat(self.renderFormGroup("max", "Max temperature", acc, val)), acc + 1, self]
+            if (acc == 2) return [result.concat(self.renderFormGroup("min", "Min temperature", acc, val)), acc + 1, self]
+            if (acc == 3) return [result.concat(self.renderFormGroup("time", "Time", acc, val)), acc + 1, self]
+        }, [[], 1, this]), this)
 
-                if (acc == 1) return [result.concat(self.maxTemp(acc, val)), acc + 1, self]
-                if (acc == 2) return [result.concat(self.minTemp(acc, val)), acc + 1, self]
-                if (acc == 3) return [result.concat(self.time(acc, val)), acc + 1, self]
-            }, [[], 1, this])
-        }, this)
-
-        return _.map(settings, s => { 
+        const result = _.map(settings, el => { 
             let result, ev
-            [result, ...ev] = reduceToComponents(s)
+            [result, ...ev] = reduceToComponents(el)
 
             return result
         })
-    }
-
-    maxTemp (key, value) { 
-        return (
-            <FormGroup className="form-inline col-md-12" key={ key }>
-                <Label for="max" className="col-sm-5"> Max. Temp</Label>
-                <Input id="max" placeholder="Max. Temp" disabled="true" defaultValue={ value } className="col-sm-7"/>
-            </FormGroup>
-        )
-    }
-
-    minTemp (key, value) { 
-        return (
-            <FormGroup className="form-inline col-md-12" key={key}>
-                <Label for="min" className="col-sm-5">min. Temp</Label>
-                <Input id="min" placeholder="min. Temp" disabled="true" defaultValue={value} className="col-sm-7"/>
-            </FormGroup>
-        )
-    }
-
-    time (key, value) { 
-        return (
-            <FormGroup className="form-inline col-md-12" key={key}>
-                <Label for="time" className="col-sm-5">Time</Label>
-                <Input id="time" placeholder="Max. Temp" disabled="true" defaultValue={value} className="col-sm-7"/>
-            </FormGroup>
-        )
+        
+        return result;
     }
 
     // Render
+
+    renderFormGroup = (id, title, key, value) => (
+        <FormGroup key={ key }>
+            <Label for={ id }>{ title }</Label>
+            <Input id={ id } disabled="true" defaultValue={ value }/>
+        </FormGroup>
+    )
 
     render () {
         return (
