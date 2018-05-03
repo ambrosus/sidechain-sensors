@@ -30,7 +30,23 @@ body {
   background-color: var(--color-wet-asphalt);
 }
 
+a {
+  color: #fff;
+}
+
 .welcome {
+  max-width: 80rem;
+  display: block;
+  margin: 0 auto;
+}
+
+.driver {
+  max-width: 80rem;
+  display: block;
+  margin: 0 auto;
+}
+
+.buyer {
   max-width: 80rem;
   display: block;
   margin: 0 auto;
@@ -51,12 +67,6 @@ body {
 
   display: flex;
   justify-content: flex-end;
-}
-
-.driver {
-  max-width: 80rem;
-  display: block;
-  margin: 0 auto;
 }
 
 .app-logo {
@@ -203,6 +213,25 @@ body {
 .footer--sub {
   font-size: 1.1rem;
   font-weight: 500;
+}
+
+.loader {
+  min-height: 100vh;
+  color: var(--color-clouds);
+
+  display: flex;
+  flex: 0 0 100%;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.loader > h3 {
+  display: block;
+  font-size: 2rem;
+  font-weight: 700;
+  letter-spacing: 1rem;
+  margin: 2rem;
 }
 
 @media only screen and (max-width: 769px) {

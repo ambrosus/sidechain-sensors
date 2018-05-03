@@ -1,5 +1,4 @@
 import React from 'react'
-import { bool } from 'prop-types'
 import { Container, Row, Col } from 'reactstrap'
 
 import '../app.css'
@@ -7,7 +6,7 @@ import Indicator from './Indicator'
 
 // Component
 
-const StatusBar = (props) => (
+export default (props) => (
     <div className="status-bar">
         <Container>
             <Row>
@@ -28,12 +27,3 @@ const StatusBar = (props) => (
         </Container>
     </div>
 )
-
-// Export
-
-StatusBar.contextTypes = {
-    online: bool.isRequired,
-    chainInitialized: bool.isRequired
-}
-
-export default StatusBar;

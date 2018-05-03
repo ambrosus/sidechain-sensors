@@ -1,5 +1,4 @@
 import React, { Component } from 'react'
-import { func } from 'prop-types'
 import { Form, FormGroup, Input, Label, Button } from 'reactstrap'
 
 import Rules from './Rules'
@@ -105,12 +104,6 @@ class DriverForm extends Component {
             </div>
         )
     }
-}
-
-// Export
-
-DriverForm.contextTypes = {
-    onStartTrip: func.isRequired
 }
 
 export default DriverForm;

@@ -16,7 +16,7 @@ import Callback from './components/Callback'
 import Welcome from './components/Welcome'
 import NoMatch from './components/NoMatch'
 import ChainStatus from './components/ChainStatus'
-import Viewer from './components/Viewer'
+import Buyer from './Buyer'
 
 // Component
 
@@ -28,7 +28,7 @@ const Root = () => (
                     { (isLoggedIn()) ? (
                         (userHasScopes(["create:transactions"]) ? (
                             <Route path="/" exact component={ Driver } />
-                        ) : (<Route path="/" exact component={ Viewer } />))
+                        ) : (<Route path="/" exact component={ Buyer } />))
                         ) : (<Route path="/" exact component={ Welcome } />)
                     }
                     <Route path="/callback" component={ Callback } />

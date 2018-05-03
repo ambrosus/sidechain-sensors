@@ -29,7 +29,7 @@ class Driver extends Component {
           <Container>
             <Row>
               <Col xs="12" md={{ size: 10, offset: 1 }} lg={{ size: 8, offset: 2 }}>
-                <StatusBar online={online || false} chainInitialized={chain_initilized || false} />
+                <StatusBar online={ online || false } chainInitialized={ chain_initilized || false } />
               </Col>
             </Row>
 
