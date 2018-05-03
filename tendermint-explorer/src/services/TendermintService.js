@@ -5,10 +5,10 @@ import config from '../config'
 
 // Public 
 
-export async function health() {
+export async function checkHealth() {
   try {
     axios.defaults.headers.common['Authorization'] = "Bearer " + localStorage.getItem('access_token')
-    const res = await axios.get(config.API_BACKEND + "/health")
+    const res = await axios.get(config.API_BACKEND + "/checkHealth")
     const status = res.status
     const response = JSON.parse(res.data).result.response.data
 
@@ -24,8 +24,7 @@ export async function health() {
 export async function initChain(seed, rules) {
   const params = { seed: seed, rules: rules }
   const res = await axios.post(config.API_BACKEND + "/initilize-chain", params)
-  console.log("INIT CHAIN", res);
-  
+
   if (JSON.parse(res.data).result.hash) {
     window.location.href = "/chain-started"
   }

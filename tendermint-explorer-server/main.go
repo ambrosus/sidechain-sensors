@@ -30,7 +30,7 @@ func query(endpoint string, c echo.Context) error {
 	return c.JSON(http.StatusOK, string(body[:]))
 }
 
-func health(c echo.Context) error {
+func checkHealth(c echo.Context) error {
 	return query("abci_info", c)
 }
 
@@ -104,7 +104,7 @@ func main() {
 
 	r := e.Group("/")
 	r.Use(middleware.JWTWithConfig(jwtConfig))
-	r.GET("health", health)
+	r.GET("checkHealth", checkHealth)
 	r.GET("chain_status", chainStatus)
 	r.GET("blocks", blocks)
 	r.GET("seed", seed)

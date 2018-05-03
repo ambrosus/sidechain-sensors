@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 
-import { setIdToken, setAccessToken } from '../services/AuthService'
+import history from '../history'
+import { setIdToken, setAccessToken, userHasScopes } from '../services/AuthService'
 
 // Component
 
@@ -10,11 +11,12 @@ class Callback extends Component {
     setAccessToken();
     setIdToken();
 
-    window.location.href = "/";
+    const isDriver = userHasScopes(["create:transactions"])
+    history.push(isDriver ? '/driver' : '/buyer')
   }
 
   render() {
-    return <div className="callback"></div>
+    return <div></div>
   }
 }
 

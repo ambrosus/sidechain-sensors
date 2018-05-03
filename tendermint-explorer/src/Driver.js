@@ -1,7 +1,8 @@
 import React, { Component } from 'react'
 import { Alert, Jumbotron, Container, Row, Col } from 'reactstrap'
 
-import { health as tenderHealth, initChain } from './services/TendermintService'
+import { checkHealth, initChain } from './services/TendermintService'
+import { logout } from './services/AuthService'
 
 import StatusBar from './components/StatusBar'
 import DriverForm from './components/DriverForm'
@@ -24,16 +25,25 @@ class Driver extends Component {
     this.checkHealth()
   }
 
-  // Private
+  // Private 
 
   async checkHealth () {
-    const { status, response } = await tenderHealth()
+    const { status, response } = await checkHealth()
 
     if (status === 200) {
       this.setState({
         online: true,
         tendermint: response,
         error: undefined,
+        warning: undefined
+      })
+    } else if (status === 401) {
+      logout()
+    } else if (status === 404) {
+      this.setState({
+        online: false,
+        tendermint: undefined,
+        error: "Not internet connection or server unavailable",
         warning: undefined
       })
     } else if (status === 503) {

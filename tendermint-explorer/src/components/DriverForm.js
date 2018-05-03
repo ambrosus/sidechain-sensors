@@ -92,7 +92,7 @@ class DriverForm extends Component {
                         />
                     </FormGroup>
 
-                    <Rules rules={ this.props.rules }/>
+                    <Rules rules={ this.state.rules }/>
 
                     <Button block 
                         color={ isValidInputs ? "success" : "secondary" }

@@ -8,13 +8,9 @@ import '../App.css';
 
 class Rules extends Component {
 
-    isEven (n) {
-        return n % 2 == 0;
-    }
-
     buildFromRules (rules) {
         if (rules === undefined || rules === "") return
-        if (!this.isEven(rules.length)) return
+        if (rules.length % 2 == 0) return
         if (rules.length < 4) return
 
         let chunks = _.chunk(rules, 2)
@@ -67,11 +63,11 @@ class Rules extends Component {
 
     // Render
 
-    render() {
+    render () {
         return (
-            <Row className="col-md-12 pt-3">
+            <div className="rules">
                 { this.buildFromRules(this.props.rules) }
-            </Row>
+            </div>
         )
     }
 }
