@@ -8,14 +8,14 @@ import { getAccessToken } from './AuthService'
 
 export async function checkHealth() {
   try {
-    axios.defaults.headers.common['Authorization'] = "Bearer " + getAccessToken()
-
     const res = await axios.get(config.API_BACKEND + "/check_health")
     const status = res.status
     const response = JSON.parse(res.data).result.response.data
-
+    
     return { status, response }
   } catch (err) {
+    if (!err.response) return { status: 503, response: "Network error" }
+
     const status = err.response.status
     const response = err.response.statusText
 
@@ -25,8 +25,6 @@ export async function checkHealth() {
 
 export async function initChain(seed, rules) {
   try {
-    axios.defaults.headers.common['Authorization'] = "Bearer " + getAccessToken()
-
     const params = { seed: seed, rules: rules }
     const res = await axios.post(config.API_BACKEND + "/init_chain", params)
     const status = res.status

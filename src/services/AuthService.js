@@ -48,8 +48,8 @@ export function getAccessToken() {
 export function setAccessToken() {
     let accessToken = getParameterByName('access_token')
     localStorage.setItem(ACCESS_TOKEN_KEY, accessToken)
-    
-    axios.defaults.headers.common['Authorization'] = "Bearer " + accessToken
+
+    axios.defaults.headers.common['Authorization'] = "Bearer " + getAccessToken()
 }
 
 export function isLoggedIn() {

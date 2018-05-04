@@ -16,6 +16,7 @@
     "jquery": "^1.9.1",
     "jwt-decode": "^2.2.0",
     "lodash": "^4.17.5",
+    "npm": "^6.0.0",
     "popper.js": "^1.12.9",
     "react": "^16.2.0",
     "react-bootstrap-table": "^4.3.1",
@@ -29,8 +30,20 @@
     "reactstrap": "^5.0.0-beta.2"
   },
   "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "eject": "react-scripts eject"
+    "tendermint:clean": "tendermint unsafe_reset_all",
+    "tendermint:node": "tendermint node",
+    "tendermint:abci": "abci-cli kvstore",
+    "tendermint:server": "go run server/main.go",
+    "tendermint:start": "npm-run-all --parallel tendermint:node tendermint:abci tendermint:server",
+    "tendermint": "npm-run-all tendermint:clean tendermint:start",
+    
+    "react:start": "react-scripts start",
+    "react:build": "react-scripts build",
+    "react:eject": "react-scripts eject",
+
+    "start": "npm-run-all --parallel tendermint react:start"
+  },
+  "devDependencies": {
+    "npm-run-all": "^4.1.2"
   }
 }

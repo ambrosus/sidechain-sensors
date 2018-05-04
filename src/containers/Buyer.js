@@ -5,8 +5,8 @@ import { CSVLink } from 'react-csv'
 
 import 'react-table/react-table.css'
 
-import Navigation from './components/Navigation'
-import Loader from './components/Loader'
+import Navigation from '../components/Navigation'
+import Loader from '../components/Loader'
 
 // Components
 

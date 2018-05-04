@@ -6,14 +6,14 @@ import history from './history'
 import registerServiceWorker from './registerServiceWorker'
 import 'bootstrap/dist/css/bootstrap.css'
 
-import App from './App'
-import Driver from './Driver'
+import App from './containers/App'
+import Driver from './containers/Driver'
+import Buyer from './containers/Buyer'
 import Callback from './components/Callback'
 import Welcome from './components/Welcome'
 import NoMatch from './components/NoMatch'
 import ChainStatus from './components/ChainStatus'
 import RequireAuth from './components/HOC/RequireAuth'
-import Buyer from './Buyer'
 
 // Component
 

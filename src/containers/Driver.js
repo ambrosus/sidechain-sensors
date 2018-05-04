@@ -1,12 +1,12 @@
 import React, { Component, Fragment } from 'react'
 import { Alert, Jumbotron, Container, Row, Col } from 'reactstrap'
 
-import { checkHealth, initChain } from './services/TendermintService'
-import { logout } from './services/AuthService'
+import { checkHealth, initChain } from '../services/TendermintService'
+import { logout } from '../services/AuthService'
 
-import Navigation from './components/Navigation'
-import StatusBar from './components/StatusBar'
-import DriverForm from './components/DriverForm'
+import Navigation from '../components/Navigation'
+import StatusBar from '../components/StatusBar'
+import DriverForm from '../components/DriverForm'
 
 // Component
 
@@ -36,8 +36,7 @@ class Driver extends Component {
   startTrip = async (seed, rules) => {
     const { status, response } = await initChain(seed, rules)
     this.changeState(status, response)
-    console.log("RESPONSE", response);
-    
+
     if (response && response["hash"]) {
       this.setState({ chainInited: true })
     }
