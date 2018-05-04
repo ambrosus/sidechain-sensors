@@ -8,6 +8,8 @@ import { getAccessToken } from './AuthService'
 
 export async function checkHealth() {
   try {
+    if (!getAccessToken()) return { status: 401, response: "Unautorized" }
+
     axios.defaults.headers.common['Authorization'] = "Bearer " + getAccessToken()
 
     const res = await axios.get(config.API_BACKEND + "/check_health")

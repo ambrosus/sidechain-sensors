@@ -10,7 +10,7 @@ import App from './containers/App'
 import Driver from './containers/Driver'
 import Buyer from './containers/Buyer'
 import Callback from './components/Callback'
-import Welcome from './components/Welcome'
+import Welcome from './containers/Welcome'
 import NoMatch from './components/NoMatch'
 import RequireAuth from './components/HOC/RequireAuth'
 

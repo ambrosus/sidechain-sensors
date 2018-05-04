@@ -65,12 +65,11 @@ export function login(role) {
     auth.authorize({ responseType, redirectUri, audience, scope })
 }
 
-export function logout() {
+export function logout(err) {
     localStorage.clear()
-
     delete axios.defaults.headers.common['Authorization']
 
-    history.push('/')
+    err ? history.push('/', { error: err }) : history.push('/')   
 }
 
 // Private

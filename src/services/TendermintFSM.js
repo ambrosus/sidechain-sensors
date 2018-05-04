@@ -9,7 +9,7 @@ export function changeState(status, response) {
             warning: undefined
         }
     } else if (status === 401) {
-        logout()
+        logout('Authentication required.')
     } else if (status === 404) {
         return {
             online: false,
