@@ -10,7 +10,7 @@ class Rules extends Component {
 
     buildFromRules (rules) {
         if (rules === undefined || rules === "") return null
-        if (rules.length % 2 === 0) return null
+        if (rules.length % 2 === 1) return null
         if (rules.length < 4) return null
 
         const chunks = _.chunk(rules, 2)
