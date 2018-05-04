@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
 
-import history from '../../history'
 import { isLoggedIn, logout } from '../../services/AuthService'
 
 // Component

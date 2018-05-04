@@ -2,7 +2,7 @@ import React, { Component, Fragment } from 'react'
 import { Alert, Jumbotron, Container, Row, Col } from 'reactstrap'
 
 import { checkHealth, initChain } from '../services/TendermintService'
-import { logout } from '../services/AuthService'
+import { changeState } from '../services/TendermintFSM'
 
 import Navigation from '../components/Navigation'
 import StatusBar from '../components/StatusBar'
@@ -11,7 +11,7 @@ import DriverForm from '../components/DriverForm'
 // Component
 
 class Driver extends Component {
-
+  
   state = {
     online: false,
     chainInited: false,
@@ -30,48 +30,20 @@ class Driver extends Component {
 
   checkHealth = async () => {
     const { status, response } = await checkHealth()
-    this.changeState(status, response)
+    const newState = changeState(status, response)
+
+    if (newState) {
+      this.setState({ ...this.state, ...newState })
+    }
   }
 
   startTrip = async (seed, rules) => {
     const { status, response } = await initChain(seed, rules)
-    this.changeState(status, response)
+    const newState = changeState(status, response)
+    this.setState({ ...this.state, ...newState })
 
     if (response && response["hash"]) {
       this.setState({ chainInited: true })
-    }
-  }
-
-  changeState = (status, response) => {
-    if (status === 200 && response) {
-      this.setState({
-        online: true,
-        tendermint: response,
-        error: undefined,
-        warning: undefined
-      })
-    } else if (status === 401) {
-      logout()
-    } else if (status === 404) {
-      this.setState({
-        online: false,
-        tendermint: undefined,
-        error: "Not internet connection or server unavailable",
-        warning: undefined
-      })
-    } else if (status === 503) {
-      this.setState({
-        online: false,
-        tendermint: undefined,
-        error: response,
-        warning: undefined
-      })
-    } else {
-      if (response) {
-        this.setState({ warning: response })
-      } else {
-        this.setState({ warning: "Tendermint have responed with an empty message" })
-      }
     }
   }
 

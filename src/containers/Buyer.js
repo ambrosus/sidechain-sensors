@@ -5,8 +5,12 @@ import { CSVLink } from 'react-csv'
 
 import 'react-table/react-table.css'
 
+import { checkHealth } from '../services/TendermintService'
+import { changeState } from '../services/TendermintFSM'
+
 import Navigation from '../components/Navigation'
 import Loader from '../components/Loader'
+import StatusBar from '../components/StatusBar'
 
 // Components
 
@@ -15,9 +19,31 @@ class Buyer extends Component {
   // State
 
   state = {
+    online: false,
+    chainInited: false,
+    tendermint: undefined,
+    error: undefined,
+    warning: undefined,
     seed: "", 
     blocks: [['key', 'value', 'timestamp']], 
     loaded: true
+  }
+
+  // Life
+
+  componentWillMount () {
+    this.checkHealth()
+  }
+
+  // Private 
+
+  checkHealth = async () => {
+    const { status, response } = await checkHealth()
+    const newState = changeState(status, response)
+
+    if (newState) {
+      this.setState({ ...this.state, ...newState })
+    }
   }
 
   // Render
@@ -76,10 +102,9 @@ class Buyer extends Component {
   }
 
   render() {
-    if (!this.state.loaded) {
-      return <Loader loading/>
-    }
+    if (!this.state.loaded) return <Loader loading/>
 
+    const { online, chainInited } = this.state
     const isDataExists = this.state.blocks.length > -1
   
     return (
@@ -89,6 +114,12 @@ class Buyer extends Component {
         <div className="buyer">
           <Jumbotron>
             <Container>
+              <Row>
+                <Col xs="12" md={{ size: 10, offset: 1 }} lg={{ size: 8, offset: 2 }}>
+                  <StatusBar online={ online || false } chainInited={ chainInited || false } />
+                </Col>
+              </Row>
+
               { this.renderForm() }
               { !isDataExists && this.renderWarning("No data in chain") }
               { isDataExists && this.renderTable() }
