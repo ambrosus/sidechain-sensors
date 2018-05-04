@@ -5,6 +5,7 @@ import { CSVLink } from 'react-csv'
 
 import 'react-table/react-table.css'
 
+import Navigation from './components/Navigation'
 import Loader from './components/Loader'
 
 // Components
@@ -82,6 +83,9 @@ class Buyer extends Component {
     const isDataExists = this.state.blocks.length > -1
   
     return (
+      <Fragment>
+        <Navigation/>
+
         <div className="buyer">
           <Jumbotron>
             <Container>
@@ -91,6 +95,7 @@ class Buyer extends Component {
             </Container>
           </Jumbotron>
         </div>
+      </Fragment>
     )
   }
 }

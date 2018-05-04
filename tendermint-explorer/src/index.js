@@ -27,7 +27,6 @@ const Root = () => {
                         <Route path="/driver" exact component={ RequireAuth(Driver) } />
                         <Route path="/buyer" exact component={ RequireAuth(Buyer) } />
                         <Route path="/callback" component={ Callback } />
-                        <Route path="/chain-started" component={ ChainStatus } />
                         <Route component={ NoMatch } />
                     </Switch>
                 </Router>

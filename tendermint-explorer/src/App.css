@@ -38,6 +38,8 @@ a {
   max-width: 80rem;
   display: block;
   margin: 0 auto;
+  padding-top: 10rem;
+  padding-bottom: 5rem;
 }
 
 .driver {

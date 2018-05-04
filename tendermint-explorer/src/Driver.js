@@ -1,9 +1,10 @@
-import React, { Component } from 'react'
+import React, { Component, Fragment } from 'react'
 import { Alert, Jumbotron, Container, Row, Col } from 'reactstrap'
 
 import { checkHealth, initChain } from './services/TendermintService'
 import { logout } from './services/AuthService'
 
+import Navigation from './components/Navigation'
 import StatusBar from './components/StatusBar'
 import DriverForm from './components/DriverForm'
 
@@ -119,24 +120,28 @@ class Driver extends Component {
     const { online, chainInited } = this.state
 
     return (
-      <div className="driver">
-        <Jumbotron>
-          <Container>
-            { this.state.chainInited && this.renderSuccess("Chain has been initiated. All details now available to the buyer.") }
-            { this.state.warning && this.renderWarning(this.state.warning) }
-            { this.state.error && this.renderError(this.state.error) }
+      <Fragment>
+        <Navigation/>
+        
+        <div className="driver">
+          <Jumbotron>
+            <Container>
+              { this.state.chainInited && this.renderSuccess("Chain has been initiated. All details now available to the buyer.") }
+              { this.state.warning && this.renderWarning(this.state.warning) }
+              { this.state.error && this.renderError(this.state.error) }
 
-            <Row>
-              <Col xs="12" md={{ size: 10, offset: 1 }} lg={{ size: 8, offset: 2 }}>
-                <StatusBar online={ online || false } chainInited={ chainInited || false } />
-              </Col>
-            </Row>
+              <Row>
+                <Col xs="12" md={{ size: 10, offset: 1 }} lg={{ size: 8, offset: 2 }}>
+                  <StatusBar online={ online || false } chainInited={ chainInited || false } />
+                </Col>
+              </Row>
 
-            { !this.state.chainInited && this.renderDriverForm() }
-          </Container>
-        </Jumbotron>
-      </div>
-    );
+              { !this.state.chainInited && this.renderDriverForm() }
+            </Container>
+          </Jumbotron>
+        </div>
+      </Fragment>
+    )
   }
 }
 

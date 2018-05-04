@@ -1,6 +1,5 @@
 import React, { Fragment } from 'react'
 
-import Navigation from './components/Navigation'
 import Footer from './components/Footer'
 
 // Component
@@ -13,7 +12,6 @@ export default (props) => {
 
     return (
         <Fragment>
-            <Navigation/>
             { childrenWithProps }
             <Footer/>
         </Fragment>

@@ -37,7 +37,7 @@ export function getIdToken() {
 }
 
 export function setIdToken() {
-    let idToken = getParameterByName('id_token')
+    const idToken = getParameterByName('id_token')
     localStorage.setItem(ID_TOKEN_KEY, idToken)
 }
 
@@ -54,7 +54,8 @@ export function setAccessToken() {
 
 export function isLoggedIn() {
     const idToken = getIdToken()
-
+    console.log(!!idToken, !isTokenExpired(idToken));
+    
     return !!idToken && !isTokenExpired(idToken)
 }
 
@@ -79,7 +80,8 @@ export function logout() {
 
 function getParameterByName(name) {
     let match = RegExp('[#&]' + name + '=([^&]*)').exec(window.location.hash)
-
+    console.log("MATCH", name, decodeURIComponent(match[1].replace(/\+/g, ' ')));
+    
     return match && decodeURIComponent(match[1].replace(/\+/g, ' '))
 }
 
