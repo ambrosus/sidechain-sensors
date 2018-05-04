@@ -86,9 +86,7 @@ function getParameterByName(name) {
 function getTokenExpirationDate(encodedToken) {
     const token = decode(encodedToken)
 
-    if (!token.exp) {
-        return null
-    }
+    if (!token.exp) return null
 
     const date = new Date(0)
     date.setUTCSeconds(token.exp)
@@ -97,6 +95,8 @@ function getTokenExpirationDate(encodedToken) {
 }
 
 function isTokenExpired(token) {
+    if (!token) return true
+
     const expirationDate = getTokenExpirationDate(token)
 
     return expirationDate < new Date()

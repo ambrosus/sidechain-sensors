@@ -12,6 +12,7 @@ import Callback from './components/Callback'
 import Welcome from './components/Welcome'
 import NoMatch from './components/NoMatch'
 import ChainStatus from './components/ChainStatus'
+import RequireAuth from './components/HOC/RequireAuth'
 import Buyer from './Buyer'
 
 // Component
@@ -23,8 +24,8 @@ const Root = () => {
                 <Router history={ history }>
                     <Switch>
                         <Route path="/" exact component={ Welcome } />
-                        <Route path="/driver" exact component={ Driver } />
-                        <Route path="/buyer" exact component={ Buyer } />
+                        <Route path="/driver" exact component={ RequireAuth(Driver) } />
+                        <Route path="/buyer" exact component={ RequireAuth(Buyer) } />
                         <Route path="/callback" component={ Callback } />
                         <Route path="/chain-started" component={ ChainStatus } />
                         <Route component={ NoMatch } />
