@@ -65,7 +65,8 @@ func block(c echo.Context) error {
 	}
 	json := string(body)
 	var result string
-	result = gjson.Get(json, "result.results.DeliverTx.tags").String()
+	result = gjson.Get(json, "result.results.DeliverTx").String()
+
 	return c.JSON(http.StatusOK, result)
 }
 
