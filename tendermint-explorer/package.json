@@ -1,14 +1,22 @@
 {
-  "name": "tendermint-explorer",
+  "name": "ambrosus-prototype-application",
   "version": "0.1.0",
+  "description": "Ambrosus prototype application",
   "private": true,
+  "author": "Alex Troush & Dmytro Nasyrov",
   "dependencies": {
     "auth0-js": "^9.3.2",
     "axios": "^0.18.0",
+    "babel-core": "^6.2.1",
+    "babel-loader": "^6.2.0",
+    "babel-preset-es2015": "^6.1.18",
+    "babel-preset-react": "^6.1.18",
+    "babel-preset-stage-1": "^6.1.18",
     "bootstrap": "^4.0.0",
     "jquery": "^1.9.1",
     "jwt-decode": "^2.2.0",
     "lodash": "^4.17.5",
+    "npm": "^6.0.0",
     "popper.js": "^1.12.9",
     "react": "^16.2.0",
     "react-bootstrap-table": "^4.3.1",
@@ -17,13 +25,29 @@
     "react-router": "^4.2.0",
     "react-router-dom": "^4.2.2",
     "react-scripts": "1.1.1",
+    "react-spinners": "^0.3.2",
     "react-table": "^6.8.0",
     "reactstrap": "^5.0.0-beta.2"
   },
+  "devDependencies": {
+    "npm-run-all": "^4.1.2"
+  },
   "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test --env=jsdom",
-    "eject": "react-scripts eject"
+    "tendermint:remove": "rm -r $HOME/.tendermint",
+    "tendermint:init": "tendermint init",
+    "tendermint:clean": "npm-run-all tendermint:remove tendermint:init",
+    "tendermint:start": "tendermint node --consensus.create_empty_blocks=false",
+
+    "abci:clean": "rm -r $GOPATH/src/github.com/ambrosus/abci-ambrosus/keyvalue.db",
+    "abci:start": "cd $GOPATH/src/github.com/ambrosus/abci-ambrosus && go run main.go",
+
+    "server:start": "go run $GOPATH/src/github.com/ambrosus/tendermint-explorer-server/main.go",
+
+    "react:start": "react-scripts start",
+    "react:build": "react-scripts build",
+    "react:eject": "react-scripts eject",
+
+    "clean": "npm-run-all --parallel tendermint:clean abci:clean",
+    "start": "npm-run-all --parallel abci:start tendermint:start server:start react:start"
   }
 }

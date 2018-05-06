@@ -1,0 +1,12 @@
+package: github.com/ambrosus/tendermint-explorer-server
+import:
+- package: github.com/labstack/echo
+  version: ^3.3.5
+  subpackages:
+  - middleware
+- package: github.com/tidwall/gjson
+  version: ^1.1.0
+
+- package: golang.org/x/crypto
+  vcs: git
+  repo: http://github.com/golang/crypto
