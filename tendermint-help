@@ -42,7 +42,6 @@ cd ~/ambrosus/tendermint-explorer
 npm install
 
 Clean:
-cd ~/ambrosus/tendermint-explorer
 rm -r $HOME/.tendermint
 tendermint init
 rm -r $GOPATH/src/github.com/ambrosus/abci-ambrosus/keyvalue.db

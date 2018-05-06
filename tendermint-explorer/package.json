@@ -36,7 +36,7 @@
     "tendermint:remove": "rm -r $HOME/.tendermint",
     "tendermint:init": "tendermint init",
     "tendermint:clean": "npm-run-all tendermint:remove tendermint:init",
-    "tendermint:start": "tendermint node",
+    "tendermint:start": "tendermint node --consensus.create_empty_blocks=false",
 
     "abci:clean": "rm -r $GOPATH/src/github.com/ambrosus/abci-ambrosus/keyvalue.db",
     "abci:start": "cd $GOPATH/src/github.com/ambrosus/abci-ambrosus && go run main.go",
