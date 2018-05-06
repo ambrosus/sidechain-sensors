@@ -1,119 +1,43 @@
 package main
 
 import (
-	"io/ioutil"
-	"net/http"
+	"flag"
+	"os"
 
-	"github.com/labstack/echo"
-	"github.com/labstack/echo/middleware"
-	"github.com/tidwall/gjson"
+	"github.com/tendermint/abci/server"
+	"github.com/tendermint/tmlibs/common"
+	"github.com/tendermint/tmlibs/log"
+	mapp "github.com/ambrosus/abci-ambrosus/app"
 )
 
-func health(c echo.Context) error {
-	resp, err := http.Get("http://localhost:46657/abci_info")
-	if err != nil {
-		return c.JSON(http.StatusServiceUnavailable, "Tendermint offline")
-	}
-	defer resp.Body.Close()
-	body, err := ioutil.ReadAll(resp.Body)
-
-	return c.JSON(http.StatusOK, string(body[:]))
-}
-
-func chainStatus(c echo.Context) error {
-	resp, err := http.Get("http://localhost:46657/abci_query?data=\"chain_status\"")
-	if err != nil {
-		return c.JSON(http.StatusServiceUnavailable, "Tendermint offline")
-	}
-	defer resp.Body.Close()
-	body, err := ioutil.ReadAll(resp.Body)
-	if err != nil {
-		return c.JSON(http.StatusServiceUnavailable, "Tendermint offline")
-	}
-	json := string(body)
-	var result string
-	result = gjson.Get(json, "result.response.log").String()
-	return c.JSON(http.StatusOK, result)
-}
-
-func seed(c echo.Context) error {
-	resp, err := http.Get("http://localhost:46657/abci_query?data=\"seed\"")
-	if err != nil {
-		return c.JSON(http.StatusServiceUnavailable, "Tendermint offline")
-	}
-	defer resp.Body.Close()
-	body, err := ioutil.ReadAll(resp.Body)
-	if err != nil {
-		return c.JSON(http.StatusServiceUnavailable, "Tendermint offline")
-	}
-	json := string(body)
-	var result string
-	result = gjson.Get(json, "result.response.log").String()
-	return c.JSON(http.StatusOK, result)
-}
-func blocks(c echo.Context) error {
-	height := c.QueryParam("height")
-	resp, err := http.Get("http://localhost:46657/block_results?height=" + height)
-	if err != nil {
-		return c.JSON(http.StatusServiceUnavailable, "Tendermint offline")
-	}
-	defer resp.Body.Close()
-	body, err := ioutil.ReadAll(resp.Body)
-	if err != nil {
-		return c.JSON(http.StatusServiceUnavailable, "Tendermint offline")
-	}
-	json := string(body)
-	var result string
-	result = gjson.Get(json, "result.results.DeliverTx").String()
-	return c.JSON(http.StatusOK, result)
-}
-
-type params struct {
-	Seed  string
-	Rules string
-}
-
-func initilizeChain(c echo.Context) (err error) {
-	p := new(params)
-	if err = c.Bind(p); err != nil {
-		return
-	}
-	resp, err := http.Get("http://localhost:46657/broadcast_tx_commit?tx=\"initilize_chain:" + p.Seed + ":" + p.Rules + "\"")
-
-	if err != nil {
-		return c.JSON(http.StatusServiceUnavailable, "Tendermint offline")
-	}
-	defer resp.Body.Close()
-	body, err := ioutil.ReadAll(resp.Body)
-	if err != nil {
-		return c.JSON(http.StatusServiceUnavailable, "Tendermint offline")
-	}
-	json := string(body)
-	return c.JSON(http.StatusOK, json)
-}
 func main() {
-	e := echo.New()
-	// Middleware
-	e.Use(middleware.Logger())
-	e.Use(middleware.Recover())
 
-	e.Use(middleware.CORSWithConfig(middleware.CORSConfig{
-		AllowOrigins: []string{"*"},
-		AllowMethods: []string{echo.GET, echo.HEAD, echo.PUT, echo.PATCH, echo.POST, echo.DELETE},
-		AllowHeaders: []string{echo.HeaderOrigin, echo.HeaderContentType, echo.HeaderAccept, echo.HeaderAuthorization},
-	}))
-	r := e.Group("/")
-	jwtConfig := middleware.JWTConfig{
-		SigningKey: []byte("6HCVdaZbdrwxsHkSIMsK5ytKu3TSdi2e"),
+	addrPtr := flag.String("addr", "tcp://0.0.0.0:46658", "Listen address")
+	abciPtr := flag.String("abci", "socket", "socket | grpc")
+	flag.Parse()
+
+	logger := log.NewTMLogger(log.NewSyncWriter(os.Stdout))
+
+	// Create the application - in memory or persisted to disk
+	app := mapp.NewPersistentKeyValueApplication(".")
+
+	// Start the listener
+	srv, err := server.NewServer(*addrPtr, *abciPtr, app)
+	if err != nil {
+		logger.Error(err.Error())
+		os.Exit(1)
 	}
-	r.Use(middleware.JWTWithConfig(jwtConfig))
-	r.GET("health", health)
-	r.GET("chain_status", chainStatus)
-	r.GET("blocks", blocks)
-	r.GET("seed", seed)
-	r.POST("initilize-chain", initilizeChain)
-	r.GET("", func(c echo.Context) error {
-		return c.JSON(http.StatusOK, "Hello, World!")
+
+	srv.SetLogger(logger.With("module", "abci-server"))
+
+	if err := srv.Start(); err != nil {
+		logger.Error(err.Error())
+		os.Exit(1)
+	}
+
+	// Wait forever
+	common.TrapSignal(func() {
+		// Cleanup
+		srv.Stop()
 	})
-	e.Logger.Fatal(e.Start(":1323"))
 }

@@ -73,11 +73,9 @@ export async function getData (chainHeight) {
   const type = QueryType.getData
   var response = []
 
-  for (var i = 1; i <= chainHeight; i++) {
-    console.log("GET BLOCK", i);
-    
-    const blockResult = await getBlock(chainHeight)
-    response.push(blockResult)
+  for (var blockNum = 3; blockNum <= chainHeight; blockNum += 2) {
+    const blockResult = await getBlock(blockNum)
+    response.push(blockResult.response)
   }
 
   const status = response.length > 0 ? 200 : 204
@@ -89,8 +87,7 @@ export async function getBlock (height) {
   const type = QueryType.getBlock
   
   try {
-    const res = await axios.get(config.API_BACKEND + `/blocks?height=${height}`)
-    console.log("RES", res);
+    const res = await axios.get(config.API_BACKEND + `/block?height=${height}`)
     
     switch (res.data) {
       case "": {
@@ -102,7 +99,22 @@ export async function getBlock (height) {
 
       default: {
         const status = res.status
-        const response = JSON.parse(res.data)
+        const data = JSON.parse(res.data)
+        const tags = _.map(data, el => el.tags)
+        const response = _.map(tags, tag => {
+            console.log(tag);
+            
+            return _.map(tag, el => {
+              console.log(el.value);
+              return el.value
+            })
+          })[0]
+        
+        // const response = _.filter(data, i => i.tags ? _.filter(i.tags, t => t.key === "app.creator") : false)
+        //   .map(i => i.tags)
+        //   .map(i => {
+        //     return _.map(i, (v) => v.valueString)
+        //   })
 
         return { type, status, response }
       }

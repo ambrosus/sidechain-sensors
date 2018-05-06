@@ -2,5 +2,6 @@ module.exports = {
     checkHealth: 'checkHealth',
     initChain: 'initChain',
     getSeed: 'getSeed',
-    getData: 'getData'
+    getData: 'getData',
+    getBlock: 'getBlock'
 }

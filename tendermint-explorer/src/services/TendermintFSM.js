@@ -46,8 +46,6 @@ function status503 (response) {
 }
 
 function okCheckHealth (response) {
-    console.log("HEALTH", response);
-    
     return {
         online: true,
         chainInited: response.chain_initilized,
@@ -62,8 +60,6 @@ function okInitChain (response) {
 }
 
 function okGetSeed (response) {
-    console.log("SEED", response);
-
     return {
         seed: response.value,
         error: undefined,
@@ -72,14 +68,14 @@ function okGetSeed (response) {
 }
 
 function okGetData (response) {
-    console.log("GET DATA", response);
-
-    return {}
+    return {
+        blocks: response,
+        error: undefined,
+        warning: undefined
+    }
 }
 
 function okOther (response) {
-    console.log("OTHER", response);
-
     return {
         online: true,
         error: undefined,

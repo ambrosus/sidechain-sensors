@@ -76,25 +76,32 @@ class Buyer extends Component {
     </Row>
   )
 
-  renderTable = () => {
+  renderTable = (blocks) => {
+    // const columns = [
+    //   { id: "key", accessor: d => d[0] }, 
+    //   { id: "value", accessor: d => d[1] }, 
+    //   { id: "timestamp", accessor: d => d[2] }
+    // ]
     const columns = [
-      { id: "key", accessor: d => d[0] }, 
-      { id: "value", accessor: d => d[1] }, 
-      { id: "timestamp", accessor: d => d[2] }
+      { id: "YXBwLmNyZWF0b3I=", accessor: d => d[0] }, 
+      { id: "YXBwLmtleQ==", accessor: d => d[1] }, 
+      { id: "YXBwLnZhbHVl", accessor: d => d[2] }
     ]
-
+    
+    console.log("BLOCKS", blocks);
+    
     return (
       <Fragment>
         <Row className="py-2">
           <Col xs="12">
-            <ReactTable data={ this.state.blocks } columns={ columns } defaultPageSize={ 10 } className="-striped -highlight"/>
+            <ReactTable data={ blocks } columns={ columns } defaultPageSize={ 10 } className="-striped -highlight"/>
           </Col>
         </Row>
 
         <Row className="py-2">
           <Col xs="12">
             <Button block color="success">
-              <CSVLink data={ this.state.blocks } filename="tendermint-export.csv">Export Chain Data</CSVLink>
+              <CSVLink data={ blocks } filename="tendermint-export.csv">Export Chain Data</CSVLink>
             </Button>
           </Col>
         </Row>
@@ -117,7 +124,6 @@ class Buyer extends Component {
 
     const { online, chainInited, seed } = this.state
     const isDataExists = this.state.blocks.length > -1
-    console.log("STATE:", this.state);
     
     return (
       <Fragment>
@@ -134,7 +140,7 @@ class Buyer extends Component {
 
               { this.state.online && !this.state.chainInited && this.renderForm(seed) }
               { this.state.online && !isDataExists && this.renderWarning("No data in chain") }
-              { this.state.online && this.state.chainInited && this.renderTable() }
+              { this.state.online && this.state.chainInited && this.renderTable(this.state.blocks) }
             </Container>
           </Jumbotron>
         </div>

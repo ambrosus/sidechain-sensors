@@ -51,7 +51,8 @@ func seed(c echo.Context) error {
 	result = gjson.Get(json, "result.response.log").String()
 	return c.JSON(http.StatusOK, result)
 }
-func blocks(c echo.Context) error {
+
+func block(c echo.Context) error {
 	height := c.QueryParam("height")
 	resp, err := http.Get("http://localhost:46657/block_results?height=" + height)
 	if err != nil {
@@ -64,7 +65,7 @@ func blocks(c echo.Context) error {
 	}
 	json := string(body)
 	var result string
-	result = gjson.Get(json, "result.results.DeliverTx").String()
+	result = gjson.Get(json, "result.results.DeliverTx.tags").String()
 	return c.JSON(http.StatusOK, result)
 }
 
@@ -109,7 +110,7 @@ func main() {
 	r.Use(middleware.JWTWithConfig(jwtConfig))
 	r.GET("check_health", health)
 	r.GET("chain_status", chainStatus)
-	r.GET("blocks", blocks)
+	r.GET("block", block)
 	r.GET("seed", seed)
 	r.POST("init_chain", initilizeChain)
 	r.GET("", func(c echo.Context) error {
