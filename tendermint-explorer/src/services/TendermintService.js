@@ -127,21 +127,4 @@ export async function getBlock (height) {
 
     return { type, status, response }
   }
-
-  // return axios.get(config.API_BACKEND + `/blocks?height=${height}`)
-  //   .then(function (res) {
-  //     if (res.data.length > 5) {
-  //       let data = JSON.parse(res.data)
-  //       res = _.filter(data,
-  //         (i) => i.tags ?
-  //           _.filter(i.tags, (t) => t.key === "app.creator")
-  //           : false)
-  //         .map((i) => i.tags)
-  //         .map(function (i) {
-  //           return _.map(i, (v) => v.valueString)
-  //         })
-  //       this.state.blocks.push(res[0])
-  //       this.setState({ blocks: this.state.blocks })
-  //     }
-  //   })
 }
