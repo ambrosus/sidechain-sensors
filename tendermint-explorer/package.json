@@ -29,6 +29,9 @@
     "react-table": "^6.8.0",
     "reactstrap": "^5.0.0-beta.2"
   },
+  "devDependencies": {
+    "npm-run-all": "^4.1.2"
+  },
   "scripts": {
     "tendermint:remove": "rm -r $HOME/.tendermint",
     "tendermint:init": "tendermint init",
@@ -36,7 +39,7 @@
     "tendermint:start": "tendermint node",
 
     "abci:clean": "rm -r $GOPATH/src/github.com/ambrosus/abci-ambrosus/keyvalue.db",
-    "abci:start": "go run $GOPATH/src/github.com/ambrosus/abci-ambrosus/main.go",
+    "abci:start": "cd $GOPATH/src/github.com/ambrosus/abci-ambrosus && go run main.go",
 
     "server:start": "go run $GOPATH/src/github.com/ambrosus/tendermint-explorer-server/main.go",
 
@@ -45,9 +48,6 @@
     "react:eject": "react-scripts eject",
 
     "clean": "npm-run-all --parallel tendermint:clean abci:clean",
-    "start": "npm-run-all --parallel tendermint:start abci:start server:start react:start"
-  },
-  "devDependencies": {
-    "npm-run-all": "^4.1.2"
+    "start": "npm-run-all --parallel abci:start tendermint:start server:start react:start"
   }
 }
