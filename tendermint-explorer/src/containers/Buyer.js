@@ -88,8 +88,6 @@ class Buyer extends Component {
       { id: "YXBwLnZhbHVl", accessor: d => d[2] }
     ]
     
-    console.log("BLOCKS", blocks);
-    
     return (
       <Fragment>
         <Row className="py-2">
