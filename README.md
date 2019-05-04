@@ -1,3 +1,6 @@
+# About
+This was a proof of concept developed internally, it's using tendermint to store sensor data from IOT devices in a sidechain. It's an early prototype so use it with caution. Feedback welcome.
+
 # Install
 
 
